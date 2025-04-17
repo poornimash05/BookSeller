@@ -12,8 +12,14 @@ from django.db.models import Q
 @api_view(['GET'])
 def getProducts(request):
     keyword = request.query_params.get('keyword', '')
+    class_param = request.query_params.get('class', '')  # Get the class filter
 
+    # Start with a basic filter based on the keyword
     products = Product.objects.filter(name__icontains=keyword)
+
+    # If a class filter is provided, filter by category
+    if class_param:
+        products = products.filter(category__icontains=class_param)  # Use 'category' instead of 'book_class'
 
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)

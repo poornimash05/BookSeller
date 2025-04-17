@@ -6,7 +6,7 @@ import Product from '../components/Product'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { listProducts } from '../actions/productActions'
-
+import BottomFilterBar from '../components/BottomFilterBar';
 function useQuery() {
   return new URLSearchParams(useLocation().search)
 }
@@ -32,26 +32,29 @@ function SearchScreen() {
     return () => clearTimeout(timer)
   }, [dispatch, keyword])
 
-  return (
-    <>
-      <h2>Search Results for "{keyword}"</h2>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
-      ) : products.length === 0 && showNoResults ? (
-        <Message>No products found</Message>
-      ) : (
-        <Row>
-          {products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-              <Product product={product} />
-            </Col>
-          ))}
-        </Row>
-      )}
-    </>
-  )
+ 
+    return (
+      <>
+        <h2>Search Results for "{keyword}"</h2>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant='danger'>{error}</Message>
+        ) : products.length === 0 && showNoResults ? (
+          <Message>No products found</Message>
+        ) : (
+          <Row>
+            {products.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+        )}
+        <BottomFilterBar />
+      </>
+    );
+
 }
 
 export default SearchScreen

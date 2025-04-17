@@ -40,7 +40,8 @@ def addOrderItems(request):
             address=data['shippingAddress']['address'],
             city=data['shippingAddress']['city'],
             postalCode=data['shippingAddress']['postalCode'],
-            country=data['shippingAddress']['country'],
+            country=data['shippingAddress'].get('country', 'India'),
+
         )
 
         # (3) Create order items adn set order to orderItem relationship
