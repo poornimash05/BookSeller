@@ -7,11 +7,17 @@ from base.serializers import ProductSerializer
 from rest_framework import status
 
 
+from django.db.models import Q
+
 @api_view(['GET'])
 def getProducts(request):
-    products =Product.objects.all()
-    serializer=ProductSerializer(products, many=True)
+    keyword = request.query_params.get('keyword', '')
+
+    products = Product.objects.filter(name__icontains=keyword)
+
+    serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def getProduct(request, pk):
