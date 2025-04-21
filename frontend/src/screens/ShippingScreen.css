@@ -1,0 +1,21 @@
+.shipping-form {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shipping-form select,
+  .shipping-form input {
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+  }
+  
+  .shipping-form button {
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+  

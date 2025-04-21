@@ -1,0 +1,38 @@
+.login-card {
+    background: #fff;
+    border-radius: 16px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .login-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .input-icon {
+    position: relative;
+  }
+  
+  .input-icon svg {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 1rem;
+  }
+  
+  input.form-control {
+    padding-left: 2.5rem !important;
+  }
+  
+  button[type="submit"] {
+    background-color: #007bff;
+    border: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  

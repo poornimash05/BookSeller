@@ -6,6 +6,8 @@ import './index.css';
 import './bootstrap.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './styles/custom.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -13,6 +13,9 @@ function OrderScreen() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
+
     const orderDetails = useSelector((state) => state.orderDetails)
     const { order, error, loading } = orderDetails
 
@@ -27,12 +30,16 @@ function OrderScreen() {
     }
 
     useEffect(() => {
+        if (!userInfo) {
+            navigate('/login')
+            return
+        }
+    
         if (!order || successPay || order._id !== Number(orderId)) {
             dispatch({ type: ORDER_PAY_RESET })
             dispatch(getOrderDetails(orderId))
         }
-    }, [dispatch, order, orderId, successPay])
-
+    }, [dispatch, order, orderId, successPay, userInfo, navigate])
     const successPaymentHandler = (paymentResult) => {
         dispatch(payOrder(orderId, paymentResult))
     }

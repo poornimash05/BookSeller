@@ -9,28 +9,28 @@ import {
     PRODUCT_DETAILS_FAIL,
 } from '../constants/productConstant'
 
-export const listProducts = (keyword = '', selectedClass = '') => async (dispatch) => {
+export const listProducts = (
+  keyword = '',
+  classFilter = '',
+  schoolFilter = '',
+  priceSort = '',
+  minPrice = '',
+  maxPrice = ''
+) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    // Start with the base URL
-    let url = `/api/products/`;
+    let query = `?keyword=${keyword}`;
 
-    // Add the keyword filter if provided
-    if (keyword) {
-      url += `?keyword=${keyword}`;
+    if (classFilter) query += `&class=${classFilter}`;
+    if (schoolFilter) query += `&school=${schoolFilter}`;
+    if (priceSort === 'range') {
+      query += `&price=range&min_price=${minPrice}&max_price=${maxPrice}`;
+    } else if (priceSort) {
+      query += `&price=${priceSort}`;
     }
 
-    // Add the class filter if provided
-    if (selectedClass) {
-      if (url.includes('?')) {
-        url += `&class=${encodeURIComponent(selectedClass)}`; // Properly encode the class value
-      } else {
-        url += `?class=${encodeURIComponent(selectedClass)}`;
-      }
-    }
-
-    const { data } = await axios.get(url);
+    const { data } = await axios.get(`/api/products/${query}`);
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -40,14 +40,13 @@ export const listProducts = (keyword = '', selectedClass = '') => async (dispatc
     dispatch({
       type: PRODUCT_LIST_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
+        error.response && error.response.data.detail
+          ? error.response.data.detail
           : error.message,
     });
   }
 };
 
-  
 
 export const listProductDetails = (id) => async (dispatch) => {
     try {

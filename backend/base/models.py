@@ -20,6 +20,7 @@ class Product(models.Model):
     countInStock = models.IntegerField(null=True, blank=True, default=0)
     createdAt = models.DateTimeField(auto_now_add=True)
     _id = models.AutoField(primary_key=True, editable=False)
+    is_recommended = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -86,3 +87,28 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return str(self.address)
+
+class UserShippingAddress(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    address = models.CharField(max_length=200, null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
+    postalCode = models.CharField(max_length=200, null=True, blank=True)
+    country = models.CharField(max_length=200, null=True, blank=True)
+    state = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Address"
+
+
+class ClassFilter(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class SchoolFilter(models.Model):
+    name = models.CharField(max_length=255)
+    # Add other fields if needed, like description, etc.
+
+    def __str__(self):
+        return self.name

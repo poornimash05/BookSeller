@@ -6,6 +6,9 @@ import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { saveShippingAddress } from '../actions/cartActions'
 import { stateCityMap } from '../utils/allowedLocations'
+import './ShippingScreen.css'
+import { motion } from 'framer-motion'
+
 function ShippingScreen() {
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
@@ -42,23 +45,31 @@ function ShippingScreen() {
 
   return (
     <FormContainer>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
       <CheckoutSteps step1 step2 />
-      <h1>Shipping</h1>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      <Form onSubmit={submitHandler}>
+      <h2 className='text-center mb-4'>📦 Shipping Details</h2>
 
-      <Form.Group controlId='house'>
-          <Form.Label>House No. / Landmark</Form.Label>
+      {error && <div className='alert alert-danger'>{error}</div>}
+
+      <Form onSubmit={submitHandler} className='shipping-form'>
+
+        <Form.Group controlId='house' className='mb-3'>
+          <Form.Label><i className="bi bi-house-door-fill me-2" />House No. / Landmark</Form.Label>
           <Form.Control
             type='text'
-            placeholder='Enter your house no. or landmark'
+            placeholder='E.g., 221B Baker Street'
             value={houseInfo}
             onChange={(e) => setHouseInfo(e.target.value)}
             required
           />
         </Form.Group>
-        <Form.Group controlId='state'>
-          <Form.Label>State</Form.Label>
+
+        <Form.Group controlId='state' className='mb-3'>
+          <Form.Label><i className="bi bi-geo-alt-fill me-2" />State</Form.Label>
           <Form.Control
             as='select'
             value={selectedState}
@@ -69,7 +80,7 @@ function ShippingScreen() {
               setError('')
             }}
           >
-            <option value=''>Select State</option>
+            <option value=''>-- Select State --</option>
             {Object.keys(stateCityMap).map((state) => (
               <option key={state} value={state}>
                 {state}
@@ -78,8 +89,8 @@ function ShippingScreen() {
           </Form.Control>
         </Form.Group>
 
-        <Form.Group controlId='city'>
-          <Form.Label>City</Form.Label>
+        <Form.Group controlId='city' className='mb-3'>
+          <Form.Label><i className="bi bi-building me-2" />City</Form.Label>
           <Form.Control
             as='select'
             value={selectedCity}
@@ -90,7 +101,7 @@ function ShippingScreen() {
             }}
             disabled={!selectedState}
           >
-            <option value=''>Select City</option>
+            <option value=''>-- Select City --</option>
             {selectedState &&
               Object.keys(stateCityMap[selectedState]).map((city) => (
                 <option key={city} value={city}>
@@ -100,15 +111,15 @@ function ShippingScreen() {
           </Form.Control>
         </Form.Group>
 
-        <Form.Group controlId='pincode'>
-          <Form.Label>Pincode</Form.Label>
+        <Form.Group controlId='pincode' className='mb-3'>
+          <Form.Label><i className="bi bi-mailbox me-2" />Pincode</Form.Label>
           <Form.Control
             as='select'
             value={pincode}
             onChange={(e) => setPincode(e.target.value)}
             disabled={!selectedCity}
           >
-            <option value=''>Select Pincode</option>
+            <option value=''>-- Select Pincode --</option>
             {(stateCityMap[selectedState]?.[selectedCity] || []).map((pin) => (
               <option key={pin} value={pin}>
                 {pin}
@@ -117,13 +128,15 @@ function ShippingScreen() {
           </Form.Control>
         </Form.Group>
 
-        
-
-        <Button type='submit' variant='primary' className='mt-3'>
-          Continue
-        </Button>
+        <div className='text-center'>
+          <Button type='submit' variant='primary' className='px-5 py-2'>
+            Continue <i className='bi bi-arrow-right ms-2'></i>
+          </Button>
+        </div>
       </Form>
-    </FormContainer>
+      </motion.div>
+</FormContainer>
+
   )
 }
 

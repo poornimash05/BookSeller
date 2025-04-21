@@ -13,6 +13,12 @@ import PaymentScreen from './screens/PaymentScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen';
 import SearchScreen from './screens/SearchScreen'
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap-icons/font/bootstrap-icons.css'
+
+
 function App() {
   return (
     <Router>
@@ -35,6 +41,7 @@ function App() {
         </Container>
       </main>
       <Footer />
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </Router>
   );
 }

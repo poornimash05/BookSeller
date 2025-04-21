@@ -21,6 +21,8 @@ import {
     USER_UPDATE_PROFILE_RESET,
 } from '../constants/userConstant'
 
+import { toast } from 'react-toastify'
+
 //import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 
 export const login = (email, password) => async (dispatch) => {
@@ -46,6 +48,7 @@ export const login = (email, password) => async (dispatch) => {
         })
 
         localStorage.setItem('userInfo', JSON.stringify(data))
+        toast.success('Login successful!') 
 
     } catch (error) {
         console.log("LOGIN ERROR:", error.response?.data); 
@@ -55,6 +58,7 @@ export const login = (email, password) => async (dispatch) => {
                 ? error.response.data.detail
                 : error.message,
         })
+        toast.error('Invalid email or password')
     }
 }
 
@@ -93,6 +97,7 @@ export const register = (name, email, password) => async (dispatch) => {
         })
 
         localStorage.setItem('userInfo', JSON.stringify(data))
+        toast.error('See you again!')
 
     } catch (error) {
         dispatch({

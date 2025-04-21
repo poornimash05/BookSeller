@@ -122,3 +122,33 @@ def updateOrderToDelivered(request, pk):
     order.save()
 
     return Response('Order was delivered')
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def user_shipping_address(request):
+    user = request.user
+
+    try:
+        shipping = UserShippingAddress.objects.get(user=user)
+    except UserShippingAddress.DoesNotExist:
+        shipping = None
+
+    if request.method == 'GET':
+        if shipping:
+            serializer = UserShippingAddressSerializer(shipping)
+            return Response(serializer.data)
+        return Response({})  # No saved address
+
+    elif request.method == 'POST':
+        data = request.data
+        if shipping:
+            serializer = UserShippingAddressSerializer(shipping, data=data)
+        else:
+            serializer = UserShippingAddressSerializer(data={**data, 'user': user.id})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'detail': 'Address saved successfully'})
+        else:
+            print(serializer.errors)  # Log the validation errors
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

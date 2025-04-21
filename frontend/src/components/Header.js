@@ -1,66 +1,58 @@
-import React, { useState }  from 'react';
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navbar, Nav, Form, FormControl, Button, Container, NavDropdown } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import { logout } from '../actions/userActions';
+import { Link, useNavigate } from 'react-router-dom'
+import { Navbar, Nav, NavDropdown, Container, Form, FormControl } from 'react-bootstrap'
+import { logout } from '../actions/userActions'
 
-function Header() {
-  const userLogin = useSelector(state => state.userLogin)
-  const { userInfo } = userLogin
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+const Header = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [search, setSearch] = useState('')
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const { userInfo } = useSelector((state) => state.userLogin)
 
   const logoutHandler = () => {
     dispatch(logout())
   }
 
   const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery) {
-      navigate(`/search?query=${searchQuery}`);
+    e.preventDefault()
+    if (search.trim()) {
+      navigate(`/search?query=${encodeURIComponent(search)}`)
     }
-  };
+  }
 
- return (
-    <header>
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Navbar.Brand as={Link} to="/">Vidhyarthi Shop</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarNav" />
-          <Navbar.Collapse id="navbarNav">
-            <Nav className="mr-auto">
-              <Link to="/" className="nav-link">Home</Link>
-              <Link to="/cart" className="nav-link">Cart</Link>
-              {userInfo ? (
-                <NavDropdown title={userInfo.name} id="username">
-                  <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
-                  <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
-                </NavDropdown>
-              ) : (
-                <Link to="/login" className="nav-link">Login</Link>
-              )}
-            </Nav>
-            <Form className="d-flex ms-auto">
-                <FormControl 
-                  type="search" 
-                  placeholder="Search for books..." 
-                  className="me-2" 
-                  value={searchQuery}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    setSearchQuery(value)
-                    navigate(`/search?query=${encodeURIComponent(value)}`)
-                  }}
-                />
-            </Form>
-
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </header>
-  );
+  return (
+    <Navbar bg="light" variant="light" expand="lg" sticky="top">
+      <Container>
+        <Navbar.Brand as={Link} to="/">📚 Vidhyarthi Shop</Navbar.Brand>
+        <Navbar.Toggle aria-controls="main-navbar" />
+        <Navbar.Collapse id="main-navbar">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">🏠 Home</Nav.Link>
+            <Nav.Link as={Link} to="/cart">🛒 Cart</Nav.Link>
+            {userInfo ? (
+              <NavDropdown title={`👤 ${userInfo.name}`} id="user-dropdown">
+                <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
+                <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Nav.Link as={Link} to="/login">👤 Login</Nav.Link>
+            )}
+          </Nav>
+          <Form className="d-flex" onSubmit={handleSearch}>
+            <FormControl
+              type="search"
+              placeholder="Search books..."
+              className="me-2"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </Form>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  )
 }
 
-export default Header;
+export default Header
