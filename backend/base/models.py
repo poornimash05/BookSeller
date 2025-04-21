@@ -112,3 +112,14 @@ class SchoolFilter(models.Model):
 
     def __str__(self):
         return self.name
+
+class Coupon(models.Model):
+    code = models.CharField(max_length=20, unique=True)  # Unique coupon code
+    discount_type = models.CharField(max_length=10, choices=[('percentage', 'Percentage'), ('fixed', 'Fixed')])  # Discount type: percentage or fixed amount
+    discount_value = models.DecimalField(max_digits=10, decimal_places=2)  # Discount amount or percentage value
+    valid_from = models.DateTimeField()  # Start date for coupon validity
+    valid_until = models.DateTimeField()  # End date for coupon validity
+    is_active = models.BooleanField(default=True)  # To mark if the coupon is active
+
+    def __str__(self):
+        return self.code

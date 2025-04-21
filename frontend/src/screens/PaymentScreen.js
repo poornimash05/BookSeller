@@ -28,31 +28,58 @@ function PaymentScreen() {
     }
 
     return (
-        <FormContainer>
-            <CheckoutSteps step1 step2 step3 />
-
-            <Form onSubmit={submitHandler}>
-                <Form.Group>
-                    <Form.Label as='legend'>Select Method</Form.Label>
-                    <Col>
-                        <Form.Check
-                            type='radio'
-                            label='PayPal or Credit Card'
-                            id='paypal'
-                            name='paymentMethod'
-                            value='PayPal'
-                            checked
-                            onChange={(e) => setPaymentMethod(e.target.value)}
-                        />
-                    </Col>
+        <div className="payment-screen">
+          <CheckoutSteps step1 step2 step3 />
+          <FormContainer>
+            <div className="p-4 shadow rounded bg-white mt-4">
+              <h2 className="mb-4 text-center">Choose Payment Method</h2>
+              <Form onSubmit={submitHandler}>
+                <Form.Group className="mb-4">
+                  <Form.Label as="legend" className="fw-semibold mb-3">
+                    Payment Options
+                  </Form.Label>
+                  <Col>
+                    <Form.Check
+                      type="radio"
+                      label={
+                        <>
+                          <i className="fab fa-paypal me-2 text-primary"></i>
+                          PayPal or Credit Card
+                        </>
+                      }
+                      id="paypal"
+                      name="paymentMethod"
+                      value="PayPal"
+                      checked={paymentMethod === 'PayPal'}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                    />
+                    {/* Add more methods below if needed */}
+                    {/* Example for Razorpay */}
+                    {/* <Form.Check
+                      className="mt-3"
+                      type="radio"
+                      label="Razorpay"
+                      id="razorpay"
+                      name="paymentMethod"
+                      value="Razorpay"
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                    /> */}
+                  </Col>
                 </Form.Group>
-
-                <Button type='submit' variant='primary'>
-                    Continue
+      
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="w-100 fw-bold py-2"
+                >
+                  Continue to Place Order
                 </Button>
-            </Form>
-        </FormContainer>
-    )
+              </Form>
+            </div>
+          </FormContainer>
+        </div>
+      );
+      
 }
 
 export default PaymentScreen

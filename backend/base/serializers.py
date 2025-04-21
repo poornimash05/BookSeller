@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Product, ClassFilter, Order, OrderItem, ShippingAddress, Review, SchoolFilter
+from .models import Product, ClassFilter, Order, OrderItem, ShippingAddress, Review, SchoolFilter,Coupon
 from .models import UserShippingAddress
 
 
@@ -126,3 +126,8 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_formatted_total_price(self, obj):
         return f"₹{obj.totalPrice:,.2f}" if obj.totalPrice else "₹0.00"
+
+class CouponSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Coupon
+        fields = '__all__'

@@ -1,3 +1,4 @@
+// CartScreen.js
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate, useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,16 +12,13 @@ function CartScreen() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
-
   const qty = new URLSearchParams(location.search).get('qty')
     ? Number(new URLSearchParams(location.search).get('qty'))
     : 1;
 
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
     if (productId) {
@@ -28,24 +26,27 @@ function CartScreen() {
     }
   }, [dispatch, productId, qty]);
 
+  const cartTotal = cartItems.reduce((acc, item) => acc + item.qty * item.price, 0);
+
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
     if (!userInfo) {
-      navigate('/login?redirect=/shipping')
+      navigate('/login?redirect=/shipping');
     } else {
-      navigate('/shipping')
+      navigate('/shipping');
     }
-  }
+  };
+
   return (
     <Row className="mt-4">
       <Col md={8}>
         <h2 className="mb-4">🛒 Your Shopping Cart</h2>
         {cartItems.length === 0 ? (
           <Message variant="info">
-            Your cart is empty.{' '}
+            Your cart is empty.
             <Link to="/" className="btn btn-outline-primary btn-sm ms-2">
               Go Back
             </Link>
@@ -102,9 +103,10 @@ function CartScreen() {
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)} items)
               </h5>
               <h4 className="text-success">
-                ₹{cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                ₹{cartTotal.toFixed(2)}
               </h4>
             </ListGroup.Item>
+
             <ListGroup.Item className="py-3">
               <Button
                 type="button"

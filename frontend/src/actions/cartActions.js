@@ -3,7 +3,7 @@ import {
     CART_ADD_ITEM,
     CART_REMOVE_ITEM,
     CART_SAVE_SHIPPING_ADDRESS,
-
+    APPLY_COUPON_SUCCESS,
     CART_SAVE_PAYMENT_METHOD,
 } from '../constants/cartConstant'
 
@@ -59,3 +59,21 @@ export const savePaymentMethod = (data) => (dispatch) => {
     localStorage.setItem('paymentMethod', JSON.stringify(data))
     
 }
+
+export const applyCoupon = (couponCode, cartTotal) => async (dispatch) => {
+    try {
+      const { data } = await axios.post('/api/coupons/apply_coupon/', {
+        coupon_code: couponCode,
+        cart_total: cartTotal,
+      });
+  
+      dispatch({
+        type: APPLY_COUPON_SUCCESS,
+        payload: data, // should include { discount, new_total }
+      });
+  
+      toast.success(`Coupon applied! Discount: ₹${data.discount}`);
+    } catch (error) {
+      toast.error("Error applying coupon");
+    }
+  };

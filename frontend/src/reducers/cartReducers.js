@@ -4,6 +4,7 @@ import {
     CART_SAVE_SHIPPING_ADDRESS,
     CART_SAVE_PAYMENT_METHOD,
     CART_CLEAR_ITEMS,
+    APPLY_COUPON_SUCCESS,
 } from '../constants/cartConstant'
 
 export const cartReducer=(state={cartItems:[], shippingAddress: {} },action)=>{
@@ -45,6 +46,11 @@ export const cartReducer=(state={cartItems:[], shippingAddress: {} },action)=>{
                  ...state,
                  cartItems: []
             }
+        case APPLY_COUPON_SUCCESS:
+            return {
+                  ...state,
+                  coupon: action.payload, // payload could be { discountAmount: 50 } or { newTotal: 500 }
+                }
         default:
             return state
     }
