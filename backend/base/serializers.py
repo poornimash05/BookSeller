@@ -116,16 +116,31 @@ class OrderSerializer(serializers.ModelSerializer):
         return serializer.data
 
     def get_formatted_items_price(self, obj):
-        return f"₹{obj.get_cart_total():,.2f}" if hasattr(obj, 'get_cart_total') else f"₹{obj.totalPrice:,.2f}"
-
+        try:
+            price = float(obj.get_cart_total()) if hasattr(obj, 'get_cart_total') else float(obj.totalPrice)
+            return f"₹{price:,.2f}"
+        except (ValueError, TypeError):
+            return "₹0.00"
+            
     def get_formatted_shipping_price(self, obj):
-        return f"₹{obj.shippingPrice:,.2f}" if obj.shippingPrice else "₹0.00"
+        try:
+            return f"₹{float(obj.shippingPrice):,.2f}"
+        except (ValueError, TypeError):
+            return "₹0.00"
 
     def get_formatted_tax_price(self, obj):
-        return f"₹{obj.taxPrice:,.2f}" if obj.taxPrice else "₹0.00"
+        try:
+            return f"₹{float(obj.taxPrice):,.2f}"
+        except (ValueError, TypeError):
+            return "₹0.00"
+
 
     def get_formatted_total_price(self, obj):
-        return f"₹{obj.totalPrice:,.2f}" if obj.totalPrice else "₹0.00"
+        try:
+            return f"₹{float(obj.totalPrice):,.2f}"
+        except (ValueError, TypeError):
+            return "₹0.00"
+
 
 class CouponSerializer(serializers.ModelSerializer):
     class Meta:

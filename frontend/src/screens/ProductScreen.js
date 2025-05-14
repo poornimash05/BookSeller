@@ -5,7 +5,7 @@ import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { listProductDetails } from '../actions/productActions'
+import { listProductDetails,deleteProduct } from '../actions/productActions'
 
 function ProductScreen(history) {
     const { id } = useParams()

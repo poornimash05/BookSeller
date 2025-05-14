@@ -1,0 +1,48 @@
+.home-screen-container {
+  background-color: #f4f7f9;
+}
+
+.hero-section {
+  position: relative;
+  background-image: url('https://lightwallpapers.com/downloads/library-background-Wallpapers/9.book-stack-library-room-blurred-bookshelf-background_42691-514.jpg'); /* Add your preferred image */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  height: 200px; /* Adjust the height as needed */
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.4); /* Semi-transparent overlay */
+  backdrop-filter: blur(10px); /* This applies the blur effect */
+  z-index: -1; /* Makes sure the overlay is behind the content */
+}
+
+.search-bar .form-control {
+  border-radius: 25px;
+  padding-left: 15px;
+}
+
+.filter-bar {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.filter-option select {
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.filters-col {
+  margin-top: 20px;
+}
+
+.text-center {
+  text-align: center;
+}

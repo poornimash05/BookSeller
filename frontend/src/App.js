@@ -13,7 +13,9 @@ import PaymentScreen from './screens/PaymentScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen';
 import SearchScreen from './screens/SearchScreen'
-
+import UserListScreen from './screens/UserListScreen'
+import UserEditScreen from './screens/UserEditScreen'
+import AdminProductListScreen from './screens/AdminProductListScreen'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -37,6 +39,10 @@ function App() {
             <Route path="/payment" element={<PaymentScreen />} />
             <Route path="/product/:id" element={<ProductScreen />} />
             <Route path="/cart/:id?" element={<CartScreen />} />
+            <Route path="/admin/userlist" element={<UserListScreen />} />
+            <Route path='/admin/user/:id/edit' element={<UserEditScreen/>} />
+            <Route path="/admin/productlist" element={<AdminProductListScreen />} />
+
           </Routes>
         </Container>
       </main>

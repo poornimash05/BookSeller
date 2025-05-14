@@ -23,9 +23,18 @@ function OrderScreen() {
     const { loading: loadingPay, success: successPay } = orderPay
 
     if (!loading && !error) {
+        // Recalculate the items price by considering the discounted price
         order.itemsPrice = order.orderItems.reduce(
-            (acc, item) => acc + item.price * item.qty,
+            (acc, item) =>
+                acc + (item.discounted_price ? item.discounted_price : item.price) * item.qty,
             0
+        ).toFixed(2)
+    
+        // Recalculate totalPrice considering per-item discounts as well
+        order.totalPrice = (
+            parseFloat(order.itemsPrice) +
+            parseFloat(order.shippingPrice) +
+            parseFloat(order.taxPrice)
         ).toFixed(2)
     }
 
@@ -97,7 +106,9 @@ function OrderScreen() {
                                                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                                                 </Col>
                                                 <Col md={4}>
-                                                    {item.qty} x ₹{item.price} = ₹{(item.qty * item.price).toFixed(2)}
+                                                {item.qty} x ₹{item.discounted_price ? item.discounted_price : item.price} = ₹
+                                                {(item.qty * (item.discounted_price ? item.discounted_price : item.price)).toFixed(2)}
+
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
