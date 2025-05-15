@@ -9,37 +9,37 @@ import { getUserDetails, updateUser } from '../actions/userActions'
 import { USER_UPDATE_RESET } from '../constants/userConstant'
 
 function UserEditScreen() {
-    const { id: userId } = useParams()               // ✅ useParams for route param
-    const navigate = useNavigate()                   // ✅ useNavigate for redirect
+    const { id: userId } = useParams()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [isAdmin, setIsAdmin] = useState(false)
 
-    const userDetails = useSelector(state => state.userDetails)
-    const { error, loading, user } = userDetails
+    const userDetails = useSelector((state) => state.userDetails)
+    const { loading, error, user } = userDetails
 
-    const userUpdate = useSelector(state => state.userUpdate)
-    const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = userUpdate
+    const userUpdate = useSelector((state) => state.userUpdate)
+    const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = userUpdate
 
     useEffect(() => {
         if (successUpdate) {
             dispatch({ type: USER_UPDATE_RESET })
             navigate('/admin/userlist')
         } else {
-            // Only fetch if we don't already have the correct user
-            if (!user || user._id !== userId) {
+
+            if (!user.name || user._id !== Number(userId)) {
                 dispatch(getUserDetails(userId))
             } else {
-                setName(user.name || '')
-                setEmail(user.email || '')
-                setIsAdmin(user.isAdmin || false)
+                setName(user.name)
+                setEmail(user.email)
+                setIsAdmin(user.isAdmin)
             }
         }
-    }, [dispatch, userId, user?._id, successUpdate, navigate])
+    }, [dispatch, userId, successUpdate, navigate])
     
-    
+
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(updateUser({ _id: user._id, name, email, isAdmin }))
@@ -48,7 +48,6 @@ function UserEditScreen() {
     return (
         <div>
             <Link to='/admin/userlist'>Go Back</Link>
-
             <FormContainer>
                 <h1>Edit User</h1>
                 {loadingUpdate && <Loader />}
@@ -80,7 +79,7 @@ function UserEditScreen() {
                             />
                         </Form.Group>
 
-                        <Form.Group controlId='isadmin'>
+                        <Form.Group controlId='isadmin' className='my-3'>
                             <Form.Check
                                 type='checkbox'
                                 label='Is Admin'

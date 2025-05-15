@@ -65,7 +65,10 @@ class ProductSerializer(serializers.ModelSerializer):
         return serializer.data
 
     def get_formatted_price(self, obj):
-        return f"₹{obj.price:,.2f}" if obj.price else "₹0.00"
+        try:
+            return f"₹{float(obj.price):,.2f}" if obj.price else "₹0.00"
+        except (ValueError, TypeError):
+            return "₹0.00"
 
 
 class ShippingAddressSerializer(serializers.ModelSerializer):
@@ -81,7 +84,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_formatted_price(self, obj):
-        return f"₹{obj.price:,.2f}" if obj.price else "₹0.00"
+        try:
+            return f"₹{float(obj.price):,.2f}" if obj.price else "₹0.00"
+        except (ValueError, TypeError):
+            return "₹0.00"
+
 
 
 class OrderSerializer(serializers.ModelSerializer):

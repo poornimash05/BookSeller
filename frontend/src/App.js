@@ -15,6 +15,7 @@ import OrderScreen from './screens/OrderScreen';
 import SearchScreen from './screens/SearchScreen'
 import UserListScreen from './screens/UserListScreen'
 import UserEditScreen from './screens/UserEditScreen'
+import ProductEditScreen from './screens/ProductEditScreen'
 import AdminProductListScreen from './screens/AdminProductListScreen'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -42,7 +43,7 @@ function App() {
             <Route path="/admin/userlist" element={<UserListScreen />} />
             <Route path='/admin/user/:id/edit' element={<UserEditScreen/>} />
             <Route path="/admin/productlist" element={<AdminProductListScreen />} />
-
+            <Route path='/admin/product/:id/edit' element={<ProductEditScreen/>} />
           </Routes>
         </Container>
       </main>
