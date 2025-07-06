@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: BookSeller
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn base.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+    rootDir: backend
