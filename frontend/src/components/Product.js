@@ -5,7 +5,7 @@ import Rating from './Rating'
 import './ProductCard.css'
 
 // ✅ Define your backend URL once
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://bookseller-c6sd.onrender.com'
+const BACKEND_URL = process.env.REACT_APP_API_BASE_URL || 'https://bookseller-c6sd.onrender.com'
 
 function Product({ product }) {
   return (
