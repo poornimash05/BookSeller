@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -24,9 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!^i80+e*%p##bu29(em2$5$#%)n3&ml!dkj&eryyj_)w8^u*oi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+ALLOWED_HOSTS = ['*']  # For production, restrict it properly
 
 
 # Application definition
@@ -159,6 +158,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 MEDIA_URL= '/images/'
 STATICFILES_DIRS=[
     BASE_DIR / 'static'
@@ -184,3 +185,7 @@ EMAIL_HOST_USER = 'poornimasharma022@gmail.com'  # Replace with your real email
 EMAIL_HOST_PASSWORD = 'mrlo neml qyzr mrgb'  # Use app password if using Gmail 2FA
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+# Add WhiteNoise middleware
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
