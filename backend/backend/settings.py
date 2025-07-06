@@ -174,11 +174,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "https://splendorous-scone-5baa35.netlify.app",
+    "https://bookstore-testing.netlify.app",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://splendorous-scone-5baa35.netlify.app",
+    "https://bookstore-testing.netlify.app",
 ]
 
 # Email configuration
