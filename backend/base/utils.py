@@ -1,4 +1,5 @@
 import os
+import json
 import firebase_admin
 from firebase_admin import credentials, messaging
 from django.conf import settings
@@ -6,7 +7,16 @@ from django.conf import settings
 # Dynamically build the absolute path to the Firebase JSON file
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # directory of this utils.py file
 firebase_path = os.path.join(BASE_DIR, 'firebase-service-account.json')
+firebase_json = os.environ.get('FIREBASE_CREDENTIAL_JSON')
 
+if firebase_json:
+    firebase_dict = json.loads(firebase_json)
+    cred = credentials.Certificate(firebase_dict)
+    firebase_app = firebase_admin.initialize_app(cred)
+else:
+    cred = None
+    firebase_app = None
+    print("Firebase credentials not found in environment.")
 # Initialize Firebase app once (only if not already initialized)
 if not firebase_admin._apps:
     cred = credentials.Certificate(firebase_path)
