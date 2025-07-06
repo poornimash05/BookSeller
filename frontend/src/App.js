@@ -19,43 +19,26 @@ import ProductEditScreen from './screens/ProductEditScreen';
 import AdminProductListScreen from './screens/AdminProductListScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import CouponCreateScreen from './screens/CouponCreateScreen';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+import api from './api';
 import { requestPermissionAndToken, onMessageListener } from './firebase';
 import { useEffect } from 'react';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'; // ✅ Add useDispatch
+import { saveFcmToken } from './actions/userActions'; // ✅ Already imported
 
 function App() {
+  const dispatch = useDispatch(); // ✅ Declare dispatch
   const userInfo = useSelector((state) => state.userLogin.userInfo);
 
   useEffect(() => {
-    const saveFcmToken = async (fcmToken) => {
-      try {
-        if (!userInfo?.token) return;
-
-        await axios.post(
-          '/api/users/save-token/', // ✅ correct path
-          { token: fcmToken },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${userInfo.token}`,
-            },
-          }
-        );
-        console.log('✅ FCM Token saved successfully');
-      } catch (error) {
-        console.error('❌ Error saving FCM token:', error.response?.data || error.message);
-      }
-    };
-
     requestPermissionAndToken().then((token) => {
       if (token && userInfo) {
         console.log('FCM Token:', token);
-        saveFcmToken(token);
+        dispatch(saveFcmToken(token)); // ✅ Fixed: dispatch now works
       }
     });
 
@@ -63,7 +46,7 @@ function App() {
       console.log('🔔 Notification received in foreground:', payload);
       alert(`${payload.notification.title}: ${payload.notification.body}`);
     });
-  }, [userInfo]);
+  }, [dispatch, userInfo]);
 
   return (
     <Router>
