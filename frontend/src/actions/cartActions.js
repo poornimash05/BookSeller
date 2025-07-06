@@ -1,4 +1,5 @@
-import axios from 'axios'
+import api from '../api';
+
 import {
     CART_ADD_ITEM,
     CART_REMOVE_ITEM,
@@ -10,7 +11,7 @@ import {
 import { toast } from 'react-toastify'
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
-    const { data } = await axios.get(`/api/products/${id}`)
+    const { data } = await api.get(`/api/products/${id}`)
 
     dispatch({
         type: CART_ADD_ITEM,
@@ -62,7 +63,7 @@ export const savePaymentMethod = (data) => (dispatch) => {
 
 export const applyCoupon = (couponCode, cartTotal) => async (dispatch) => {
     try {
-      const { data } = await axios.post('/api/coupons/apply_coupon/', {
+      const { data } = await api.post('/api/coupons/apply_coupon/', {
         coupon_code: couponCode,
         cart_total: cartTotal,
       });
