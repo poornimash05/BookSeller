@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../api';
 import {
     PRODUCT_LIST_REQUEST,
     PRODUCT_LIST_SUCCESS,
@@ -60,7 +60,7 @@ export const listProducts = (
     const queryString = new URLSearchParams(params).toString();
     console.log("Generated query string:", queryString);
 
-    const { data } = await axios.get(`/api/products/?${queryString}`);
+    const { data } = await api.get(`/api/products/?${queryString}`);
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -83,7 +83,7 @@ export const listProductDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: PRODUCT_DETAILS_REQUEST })
 
-        const { data } = await axios.get(`/api/products/${id}`)
+        const { data } = await api.get(`/api/products/${id}`)
 
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
@@ -117,7 +117,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
           }
       }
 
-      const { data } = await axios.delete(
+      const { data } = await api.delete(
           `/api/products/delete/${id}/`,
           config
       )
@@ -154,7 +154,7 @@ export const createProduct = () => async (dispatch, getState) => {
           }
       }
 
-      const { data } = await axios.post(
+      const { data } = await api.post(
           `/api/products/create/`,
           {},
           config
@@ -192,7 +192,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
             }
         }
 
-        const { data } = await axios.put(
+        const { data } = await api.put(
             `/api/products/update/${product._id}/`,
             product,
             config
@@ -236,7 +236,7 @@ export const createProductReview = (productId, review) => async (dispatch, getSt
             }
         }
 
-        const { data } = await axios.post(
+        const { data } = await api.post(
             `/api/products/${productId}/reviews/`,
             review,
             config
