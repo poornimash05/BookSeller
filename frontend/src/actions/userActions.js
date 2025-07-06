@@ -51,7 +51,7 @@ export const saveFcmToken = (fcmToken) => async (dispatch) => {
     const token = getToken()
 
     await api.post(
-      '/api/save-token/',
+      '/api/users/save-token/',  // ✅ correct
       { token: fcmToken },
       {
         headers: {
