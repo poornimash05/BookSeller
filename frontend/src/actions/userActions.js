@@ -1,4 +1,5 @@
-import axios from 'axios'
+import api from '../api';
+
 import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -49,7 +50,7 @@ export const saveFcmToken = (fcmToken) => async (dispatch) => {
   try {
     const token = getToken()
 
-    await axios.post(
+    await api.post(
       '/api/save-token/',
       { token: fcmToken },
       {
@@ -74,7 +75,7 @@ export const login = (email, password) => async (dispatch) => {
       headers: { 'Content-type': 'application/json' },
     }
 
-    const { data } = await axios.post(
+    const { data } = await api.post(
       '/api/users/login/',
       {email, password },
       config
@@ -111,7 +112,7 @@ export const register = (name, email, password) => async (dispatch) => {
       headers: { 'Content-type': 'application/json' },
     }
 
-    const { data } = await axios.post(
+    const { data } = await api.post(
       '/api/users/register/',
       { name, email, password },
       config
@@ -144,7 +145,7 @@ export const getUserDetails = (id) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.get(`/api/users/${id}/`, config)
+    const { data } = await api.get(`/api/users/${id}/`, config)
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
 
   } catch (error) {
@@ -168,7 +169,7 @@ export const updateUserProfile = (user) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.put(`/api/users/profile/update/`, user, config)
+    const { data } = await api.put(`/api/users/profile/update/`, user, config)
 
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data })
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
@@ -211,7 +212,7 @@ export const listUsers = () => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.get(`/api/users/`, config)
+    const { data } = await api.get(`/api/users/`, config)
     dispatch({ type: USER_LIST_SUCCESS, payload: data })
 
   } catch (error) {
@@ -235,7 +236,7 @@ export const deleteUser = (id) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.delete(`/api/users/delete/${id}/`, config)
+    const { data } = await api.delete(`/api/users/delete/${id}/`, config)
     dispatch({ type: USER_DELETE_SUCCESS, payload: data })
 
   } catch (error) {
@@ -259,7 +260,7 @@ export const updateUser = (user) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.put(`/api/users/update/${user._id}/`, user, config)
+    const { data } = await api.put(`/api/users/update/${user._id}/`, user, config)
 
     dispatch({ type: USER_UPDATE_SUCCESS })
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
