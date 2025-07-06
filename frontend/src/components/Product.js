@@ -4,14 +4,18 @@ import { Link } from 'react-router-dom'
 import Rating from './Rating'
 import './ProductCard.css'
 
+// ✅ Define your backend URL once
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://bookseller-c6sd.onrender.com'
+
 function Product({ product }) {
   return (
     <Card className="my-3 p-3 rounded shadow-sm border-0 book-card h-100">
       <Link to={`/product/${product._id}`}>
         <Card.Img
-          src={product.image}
+          src={`${BACKEND_URL}/static/images/${product.image}`}
           variant="top"
           className="book-img"
+          alt={product.name}
         />
       </Link>
 
