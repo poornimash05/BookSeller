@@ -1,0 +1,13 @@
+.place-order-screen h4 {
+    font-weight: 600;
+  }
+  
+  .sticky-top {
+    position: sticky;
+    z-index: 1;
+  }
+  
+  .card {
+    border-radius: 12px;
+  }
+  

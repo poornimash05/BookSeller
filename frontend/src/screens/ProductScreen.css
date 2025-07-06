@@ -1,0 +1,13 @@
+.scrollable-reviews::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-reviews::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.scrollable-reviews {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}

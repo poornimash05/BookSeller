@@ -1,0 +1,104 @@
+/* HomeScreen.css */
+
+.home-screen-container {
+  background: linear-gradient(to right, #f9f9f9, #ffffff);
+  min-height: 100vh;
+  padding: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Filter Sidebar */
+.filter-bar {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 1rem;
+}
+
+.filter-bar h4 {
+  font-weight: 600;
+  color: #333;
+  font-size: 18px;
+}
+
+/* Filter Controls */
+.filter-option label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.filter-option select {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+/* Buttons */
+.filter-bar .btn-secondary {
+  background-color: #4b7bec;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 500;
+  color: white;
+}
+
+.filter-bar .btn-secondary:hover {
+  background-color: #3867d6;
+}
+
+/* Headings */
+h2 {
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+/* Product Cards */
+.card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border-radius: 12px !important;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive Tuning */
+@media (max-width: 768px) {
+  .filter-bar {
+    margin-bottom: 1.5rem;
+  }
+
+  .home-screen-container {
+    padding: 0.75rem;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .filter-bar h4 {
+    font-size: 16px;
+  }
+
+  .filter-option label {
+    font-size: 13px;
+  }
+
+  .filter-option select {
+    font-size: 13px;
+  }
+
+  .filter-bar .btn-secondary {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
