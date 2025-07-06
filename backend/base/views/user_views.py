@@ -10,7 +10,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from base.serializers import UserSerializer, UserSerializerWithToken
 from base.models import FCMToken
+from django.http import JsonResponse
 
+def home(request):
+    return JsonResponse({'message': 'Welcome to Book Store API'})
 # -------------------------------
 # 🔹 Save FCM Token (POST)
 # -------------------------------
