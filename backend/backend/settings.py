@@ -171,15 +171,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_ALL_ORIGINS = True  # ✅ Or restrict to specific frontend
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://bookstore-testing.netlify.app",
+    "https://bookstore-testing.netlify.app",  # ✅ Your frontend domain
 ]
 
+# Optional, but recommended for stricter security
 CSRF_TRUSTED_ORIGINS = [
     "https://bookstore-testing.netlify.app",
 ]
+
 
 # Email configuration
 
