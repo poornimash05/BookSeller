@@ -12,7 +12,7 @@ function Product({ product }) {
     <Card className="my-3 p-3 rounded shadow-sm border-0 book-card h-100">
       <Link to={`/product/${product._id}`}>
         <Card.Img
-          src={`${BACKEND_URL}/static/images/${product.image}`}
+          src={`${BACKEND_URL}/media/${product.image}`}   {/* ✅ updated path */}
           variant="top"
           className="book-img"
           alt={product.name}
