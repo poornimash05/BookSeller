@@ -13,7 +13,13 @@ class Product(models.Model):
     type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='book')
     
     name = models.CharField(max_length=200, null=True, blank=True)
-    image = models.ImageField(null=True, blank=True, upload_to='products/', default='products/placeholder.png')
+    image = models.ImageField(
+    null=True,
+    blank=True,
+    upload_to='products/',
+    default='placeholder.png'  # ✅ Not starting with slash
+     )
+
     
     # Book-specific fields
     school = models.CharField(max_length=200, null=True, blank=True)
