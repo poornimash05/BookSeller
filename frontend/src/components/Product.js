@@ -13,7 +13,10 @@ function Product({ product }) {
       <Link to={`/product/${product._id}`}>
        <Card.Img
          src={`${BACKEND_URL}/${product.image?.replace(/^\/?/, '')}`}
-         onError={(e) => (e.target.src = '/placeholder.png')}
+         onError={(e) => {
+          e.target.onerror = null
+          e.target.src = `${BACKEND_URL}/media/products/placeholder.png` // ✅ correct fallback
+         }}
          variant="top"
          className="book-img"
          alt={product.name}
