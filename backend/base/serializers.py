@@ -57,6 +57,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField(read_only=True)
     formatted_price = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()  # ✅ Override the image field
 
     class Meta:
         model = Product
@@ -72,6 +73,9 @@ class ProductSerializer(serializers.ModelSerializer):
             return f"₹{float(obj.price):,.2f}" if obj.price else "₹0.00"
         except (ValueError, TypeError):
             return "₹0.00"
+
+    def get_image(self, obj):  # ✅ This removes /static/images/ from the path
+        return obj.image.name if obj.image else None
 
 # -------------------------------
 # Shipping Address Serializers
