@@ -11,12 +11,14 @@ function Product({ product }) {
   return (
     <Card className="my-3 p-3 rounded shadow-sm border-0 book-card h-100">
       <Link to={`/product/${product._id}`}>
-        <Card.Img
-          src={`${BACKEND_URL}${product.image}`} // ✅ no extra /media
-          variant="top"
-          className="book-img"
-          alt={product.name}
-        />
+       <Card.Img
+         src={`${BACKEND_URL}/${product.image?.replace(/^\/?/, '')}`}
+         onError={(e) => (e.target.src = '/placeholder.png')}
+         variant="top"
+         className="book-img"
+         alt={product.name}
+       />
+
 
       </Link>
 
