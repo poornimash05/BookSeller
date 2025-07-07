@@ -15,7 +15,7 @@ function Product({ product }) {
          src={`${BACKEND_URL}/${product.image?.replace(/^\/?/, '')}`}
          onError={(e) => {
           e.target.onerror = null
-          e.target.src = `${BACKEND_URL}/media/placeholder.png`;
+          e.target.src = `${BACKEND_URL}/static/placeholder.png`;
          }}
          variant="top"
          className="book-img"
